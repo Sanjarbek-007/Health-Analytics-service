@@ -75,6 +75,8 @@ func (r *medicalRecordRepositoryImpl) GetMedicalReport(ctx context.Context, req 
 			fmt.Println("Error decoding document: ", err)
 			return nil, err
 		}
+		doc.FirstName = req.FirstName
+		doc.LastName = req.LastName
 		record.MedicalReport = append(record.MedicalReport, &doc)
 	}
 	fmt.Println(&record)

@@ -67,6 +67,8 @@ func (r *lifeStyleRepositoryImpl) GetLifeStyleData(ctx context.Context, req *pb.
         if err := cursor.Decode(&doc); err!= nil {
             return nil, err
         }
+        doc.FirstName = req.FirstName
+        doc.LastName = req.LastName
         user.LifeStyle = append(user.LifeStyle, &doc)
 	}
 	if err := cursor.Err(); err!= nil {

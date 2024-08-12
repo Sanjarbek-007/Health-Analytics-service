@@ -68,6 +68,8 @@ func (r *wearableRepositoryImpl) GetWearableData(ctx context.Context, req *pb.Ge
         if err!= nil {
             return nil, err
         }
+		doc.FirstName = req.FirstName
+		doc.LastName = req.LastName
         data.Warable = append(data.Warable, &doc)
 	}
 

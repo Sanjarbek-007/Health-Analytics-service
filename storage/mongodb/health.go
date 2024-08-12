@@ -100,6 +100,8 @@ func (r *healthRepositoryImpl) GetWeeklyHealthSummary(ctx context.Context, req *
         if err := cursor.Decode(&doc); err != nil {
             return nil, fmt.Errorf("error decoding document: %v", err)
         }
+		doc.FirstName=req.FirstName
+		doc.LastName=req.LastName
         summary.Recommendations = append(summary.Recommendations, &doc)
     }
 
