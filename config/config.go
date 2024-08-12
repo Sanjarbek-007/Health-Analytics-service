@@ -16,6 +16,7 @@ type Config struct {
   Redis_DB       int    `yaml:"redis_db"`
   MONGODB_NAME   string `yaml:"mongodb_name"`
   MONGODB_URI    string `yaml:"mongodb_uri"`
+  HEALTH_SERVICE string `yaml:"health_service"`
 }
 
 func Load() *Config {
@@ -34,6 +35,7 @@ func Load() *Config {
 
   config.MONGODB_NAME = cast.ToString(coalesce("MONGODB_NAME", "health"))
   config.MONGODB_URI = cast.ToString(coalesce("MONGODB_URI", "mongodb://localhost:27017"))
+  config.HEALTH_SERVICE = cast.ToString(coalesce("HEALTH_SERVICE", ":5551"))
 
   return config
 }
