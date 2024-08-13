@@ -23,6 +23,8 @@ const (
 	HealthCheck_GetRealtimeHealthMonitoring_FullMethodName   = "/health.HealthCheck/GetRealtimeHealthMonitoring"
 	HealthCheck_GetDailyHealthSummary_FullMethodName         = "/health.HealthCheck/GetDailyHealthSummary"
 	HealthCheck_GetWeeklyHealthSummary_FullMethodName        = "/health.HealthCheck/GetWeeklyHealthSummary"
+	HealthCheck_AddRealTimeData_FullMethodName               = "/health.HealthCheck/AddRealTimeData"
+	HealthCheck_GetRealTimeData_FullMethodName               = "/health.HealthCheck/GetRealTimeData"
 )
 
 // HealthCheckClient is the client API for HealthCheck service.
@@ -33,6 +35,8 @@ type HealthCheckClient interface {
 	GetRealtimeHealthMonitoring(ctx context.Context, in *GetRealtimeHealthMonitoringReq, opts ...grpc.CallOption) (*GetRealtimeHealthMonitoringRes, error)
 	GetDailyHealthSummary(ctx context.Context, in *GetDailyHealthSummaryReq, opts ...grpc.CallOption) (*GetDailyHealthSummaryRes, error)
 	GetWeeklyHealthSummary(ctx context.Context, in *GetWeeklyHealthSummaryReq, opts ...grpc.CallOption) (*GetWeeklyHealthSummaryRes, error)
+	AddRealTimeData(ctx context.Context, in *AddRealTimeDataReq, opts ...grpc.CallOption) (*AddRealTimeDataRes, error)
+	GetRealTimeData(ctx context.Context, in *GetRealTimeDataReq, opts ...grpc.CallOption) (*GetRealTimeDataRes, error)
 }
 
 type healthCheckClient struct {
@@ -83,6 +87,26 @@ func (c *healthCheckClient) GetWeeklyHealthSummary(ctx context.Context, in *GetW
 	return out, nil
 }
 
+func (c *healthCheckClient) AddRealTimeData(ctx context.Context, in *AddRealTimeDataReq, opts ...grpc.CallOption) (*AddRealTimeDataRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddRealTimeDataRes)
+	err := c.cc.Invoke(ctx, HealthCheck_AddRealTimeData_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *healthCheckClient) GetRealTimeData(ctx context.Context, in *GetRealTimeDataReq, opts ...grpc.CallOption) (*GetRealTimeDataRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRealTimeDataRes)
+	err := c.cc.Invoke(ctx, HealthCheck_GetRealTimeData_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HealthCheckServer is the server API for HealthCheck service.
 // All implementations must embed UnimplementedHealthCheckServer
 // for forward compatibility
@@ -91,6 +115,8 @@ type HealthCheckServer interface {
 	GetRealtimeHealthMonitoring(context.Context, *GetRealtimeHealthMonitoringReq) (*GetRealtimeHealthMonitoringRes, error)
 	GetDailyHealthSummary(context.Context, *GetDailyHealthSummaryReq) (*GetDailyHealthSummaryRes, error)
 	GetWeeklyHealthSummary(context.Context, *GetWeeklyHealthSummaryReq) (*GetWeeklyHealthSummaryRes, error)
+	AddRealTimeData(context.Context, *AddRealTimeDataReq) (*AddRealTimeDataRes, error)
+	GetRealTimeData(context.Context, *GetRealTimeDataReq) (*GetRealTimeDataRes, error)
 	mustEmbedUnimplementedHealthCheckServer()
 }
 
@@ -109,6 +135,12 @@ func (UnimplementedHealthCheckServer) GetDailyHealthSummary(context.Context, *Ge
 }
 func (UnimplementedHealthCheckServer) GetWeeklyHealthSummary(context.Context, *GetWeeklyHealthSummaryReq) (*GetWeeklyHealthSummaryRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWeeklyHealthSummary not implemented")
+}
+func (UnimplementedHealthCheckServer) AddRealTimeData(context.Context, *AddRealTimeDataReq) (*AddRealTimeDataRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddRealTimeData not implemented")
+}
+func (UnimplementedHealthCheckServer) GetRealTimeData(context.Context, *GetRealTimeDataReq) (*GetRealTimeDataRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRealTimeData not implemented")
 }
 func (UnimplementedHealthCheckServer) mustEmbedUnimplementedHealthCheckServer() {}
 
@@ -195,6 +227,42 @@ func _HealthCheck_GetWeeklyHealthSummary_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HealthCheck_AddRealTimeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddRealTimeDataReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HealthCheckServer).AddRealTimeData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HealthCheck_AddRealTimeData_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HealthCheckServer).AddRealTimeData(ctx, req.(*AddRealTimeDataReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HealthCheck_GetRealTimeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRealTimeDataReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HealthCheckServer).GetRealTimeData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HealthCheck_GetRealTimeData_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HealthCheckServer).GetRealTimeData(ctx, req.(*GetRealTimeDataReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HealthCheck_ServiceDesc is the grpc.ServiceDesc for HealthCheck service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -217,6 +285,14 @@ var HealthCheck_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWeeklyHealthSummary",
 			Handler:    _HealthCheck_GetWeeklyHealthSummary_Handler,
+		},
+		{
+			MethodName: "AddRealTimeData",
+			Handler:    _HealthCheck_AddRealTimeData_Handler,
+		},
+		{
+			MethodName: "GetRealTimeData",
+			Handler:    _HealthCheck_GetRealTimeData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

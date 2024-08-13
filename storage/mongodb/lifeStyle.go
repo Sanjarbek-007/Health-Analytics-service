@@ -121,11 +121,11 @@ func (r *lifeStyleRepositoryImpl) UpdateLifeStyleData(ctx context.Context, req *
 func (r *lifeStyleRepositoryImpl) DeleteLifeStyleData(ctx context.Context, req *pb.DeleteLifeStyleDataReq) (*pb.DeleteLifeStyleDataRes, error) {
 	filter := bson.D{
         {Key: "_id", Value: req.Id},
-        {Key: "deleted_at", Value: time.Now().Unix()},
+        {Key: "deleted_at", Value: 0},
     }
     coll := r.coll.Collection("lifestyle")
 
-    _, err := coll.UpdateOne(ctx, filter, bson.D{{Key: "$set", Value: bson.D{{Key: "deleted_at", Value: 0}}}})
+    _, err := coll.UpdateOne(ctx, filter, bson.D{{Key: "$set", Value: bson.D{{Key: "deleted_at", Value: time.Now().Unix()}}}})
 
     if err!= nil {
         return &pb.DeleteLifeStyleDataRes{
