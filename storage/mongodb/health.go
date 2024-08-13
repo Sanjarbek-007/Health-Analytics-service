@@ -31,13 +31,13 @@ func (r *healthRepositoryImpl) GenerateHealthRecommendations(ctx context.Context
 
 	_, err := coll.InsertOne(ctx, bson.M{
 		"_id":    uuid.NewString(),
-		"user_id": req.UserId,
-		"recommendation_type": req.RecommendationType,
+		"userId": req.UserId,
+		"recommendationType": req.RecommendationType,
 		"description": req.Description,
         "priority":    req.Priority,
-		"created_at": time.Now().Format("2006/01/02"),
-		"updated_at": time.Now().Format("2006/01/02"),
-		"deleted_at":  0,
+		"createdAt": time.Now().Format("2006/01/02"),
+		"updatedAt": time.Now().Format("2006/01/02"),
+		"deletedAt":  0,
 	})
 	if err!= nil {
         return &pb.GenerateHealthRecommendationsRes{
@@ -54,7 +54,7 @@ func (r *healthRepositoryImpl) GetRealtimeHealthMonitoring(ctx context.Context, 
 	var user pb.GetRealtimeHealthMonitoringRes
 	coll:=r.coll.Collection("health")
 
-	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"user_id": req.UserId}, {"deleted_at": 0}, {"created_at": time.Now().Format("2006/01/02")}}}).Decode(&user)
+	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"userId": req.UserId}, {"deletedAt": 0}, {"createdAt": time.Now().Format("2006/01/02")}}}).Decode(&user)
 	if err != nil {
 		return nil, fmt.Errorf("realtime health monitoring not found")
 	}
@@ -66,7 +66,7 @@ func (r *healthRepositoryImpl) GetDailyHealthSummary(ctx context.Context, req *p
 	var summary pb.GetDailyHealthSummaryRes
 	coll:=r.coll.Collection("health")
 
-	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"user_id": req.UserId}, {"deleted_at": 0}, {"created_at": req.Date}}}).Decode(&summary)
+	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"userId": req.UserId}, {"deletedAt": 0}, {"createdAt": req.Date}}}).Decode(&summary)
 	if err!= nil {
         return nil, err
     }
@@ -80,9 +80,9 @@ func (r *healthRepositoryImpl) GetWeeklyHealthSummary(ctx context.Context, req *
 
     cursor, err := coll.Find(ctx, bson.M{
 		"$and": []bson.M{
-			{"user_id": req.UserId},
-			{"deleted_at": 0},
-			{"created_at": bson.M{
+			{"userId": req.UserId},
+			{"deletedAt": 0},
+			{"createdAt": bson.M{
 				"$gte": req.StartDate,
 				"$lte": req.EndDate,
 			}},

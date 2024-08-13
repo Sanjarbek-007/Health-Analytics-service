@@ -32,15 +32,15 @@ func (r *medicalRecordRepositoryImpl) AddMedicalReport(ctx context.Context, req 
 
 	_, err := coll.InsertOne(ctx, bson.M{
 		"_id":         uuid.NewString(),
-		"user_id":     req.UserId,
-		"record_type": req.RecordType,
-		"record_date": time.Now().Format("2006/01/02"),
+		"userId":     req.UserId,
+		"recordType": req.RecordType,
+		"recordDate": time.Now().Format("2006/01/02"),
 		"description": req.Description,
-		"doctor_id":   req.DoctorId,
+		"doctorId":   req.DoctorId,
 		"attachments": req.Attachments,
-		"created_at":  time.Now().Format("2006/01/02"),
-		"updated_at":  time.Now().Format("2006/01/02"),
-		"deleted_at":  0,
+		"createdAt":  time.Now().Format("2006/01/02"),
+		"updatedAt":  time.Now().Format("2006/01/02"),
+		"deletedAt":  0,
 	})
 	if err != nil {
 		return &pb.AddMedicalReportRes{
@@ -58,8 +58,8 @@ func (r *medicalRecordRepositoryImpl) GetMedicalReport(ctx context.Context, req 
 	coll := r.coll.Collection("medical_record")
 	cursor, err := coll.Find(ctx, bson.M{
 		"$and": bson.D{
-			{Key: "user_id", Value: req.UserId},
-			{Key: "deleted_at", Value: 0},
+			{Key: "userId", Value: req.UserId},
+			{Key: "deletedAt", Value: 0},
 		},
 	})
 	if err != nil {
@@ -91,7 +91,7 @@ func (r *medicalRecordRepositoryImpl) GetMedicalReportById(ctx context.Context, 
 	var record pb.GetMedicalReportByIdRes
 	coll := r.coll.Collection("medical_record")
 
-	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"_id": req.Id}, {"deleted_at": 0}}}).Decode(&record)
+	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"_id": req.Id}, {"deletedAt": 0}}}).Decode(&record)
 	if err != nil {
 		return nil, err
 	}
@@ -102,16 +102,16 @@ func (r *medicalRecordRepositoryImpl) GetMedicalReportById(ctx context.Context, 
 func (r *medicalRecordRepositoryImpl) UpdateMedicalReport(ctx context.Context, req *pb.UpdateMedicalReportReq) (*pb.UpdateMedicalReportRes, error) {
 	update := bson.D{
 		{Key: "$set", Value: bson.D{
-			{Key: "record_type", Value: req.RecordType},
+			{Key: "recordType", Value: req.RecordType},
 			{Key: "description", Value: req.Description},
-			{Key: "doctor_id", Value: req.DoctorId},
+			{Key: "doctorId", Value: req.DoctorId},
 			{Key: "attachments", Value: req.Attachments},
-			{Key: "updated_at", Value: time.Now().Format("2006/01/02")},
+			{Key: "updatedAt", Value: time.Now().Format("2006/01/02")},
 		}},
 	}
 	coll := r.coll.Collection("medical_record")
 
-	filter := bson.D{{Key: "_id", Value: req.Id}, {Key: "deleted_at", Value: 0}}
+	filter := bson.D{{Key: "_id", Value: req.Id}, {Key: "deletedAt", Value: 0}}
 
 	_, err := coll.UpdateOne(ctx, filter, update)
 	if err != nil {
@@ -128,9 +128,9 @@ func (r *medicalRecordRepositoryImpl) UpdateMedicalReport(ctx context.Context, r
 func (r *medicalRecordRepositoryImpl) DeleteMedicalReport(ctx context.Context, req *pb.DeleteMedicalReportReq) (*pb.DeleteMedicalReportRes, error) {
 	coll := r.coll.Collection("medical_record")
 
-	update := bson.D{{Key: "$set", Value: bson.D{{Key: "deleted_at", Value: time.Now().Unix()}}}}
+	update := bson.D{{Key: "$set", Value: bson.D{{Key: "deletedAt", Value: time.Now().Unix()}}}}
 
-	filter := bson.D{{Key: "_id", Value: req.Id}, {Key: "deleted_at", Value: 0}}
+	filter := bson.D{{Key: "_id", Value: req.Id}, {Key: "deletedAt", Value: 0}}
 
 	_, err := coll.UpdateOne(ctx, filter, update)
 	if err != nil {

@@ -49,7 +49,7 @@ func TestGetLifeStyleDataById(t *testing.T) {
     repo := NewLifeStyleRepository(mDB)
 
 
-    res, err := repo.GetLifeStyleDataById(context.Background(), &pb.GetLifeStyleDataByIdReq{Id: "88684592-e9df-4f02-a265-9720607758f6"})
+    res, err := repo.GetLifeStyleDataById(context.Background(), &pb.GetLifeStyleDataByIdReq{Id: "bcafedd4-5780-4e29-8300-fc5cb58a60e1"})
     fmt.Println(res)
     assert.NoError(t, err)
     assert.NotEmpty(t, res)
@@ -62,7 +62,7 @@ func TestUpdateLifeStyleData(t *testing.T) {
     repo := NewLifeStyleRepository(mDB)
 
 
-    res, err := repo.UpdateLifeStyleData(context.Background(), &pb.UpdateLifeStyleDataReq{Id: "88684592-e9df-4f02-a265-9720607758f6", DataType: "test_data_type", DataValue: "new_test_data_value"})
+    res, err := repo.UpdateLifeStyleData(context.Background(), &pb.UpdateLifeStyleDataReq{Id: "bcafedd4-5780-4e29-8300-fc5cb58a60e1", DataType: "test_data_type", DataValue: "new_test_data_value"})
     fmt.Println(res)
     assert.NoError(t, err)
     assert.Equal(t, true, res.Message)
@@ -75,7 +75,7 @@ func TestDeleteLifeStyleData(t *testing.T) {
     repo := NewLifeStyleRepository(mDB)
 
 
-    res, err := repo.DeleteLifeStyleData(context.Background(), &pb.DeleteLifeStyleDataReq{Id: "88684592-e9df-4f02-a265-9720607758f6"})
+    res, err := repo.DeleteLifeStyleData(context.Background(), &pb.DeleteLifeStyleDataReq{Id: "bcafedd4-5780-4e29-8300-fc5cb58a60e1"})
     fmt.Println(res)
     assert.NoError(t, err)
     assert.Equal(t, true, res.Message)

@@ -6,3 +6,43 @@ time=2024-08-13T01:16:01.654+05:00 level=INFO msg="Received DeleteLifeStyleData 
 time=2024-08-13T01:17:29.318+05:00 level=INFO msg="Received DeleteLifeStyleData request" user_id=d6ec1fbc-dee5-4738-aad5-ae506d3f5603 id=d6ec1fbc-dee5-4738-aad5-ae506d3f5603
 time=2024-08-13T02:29:42.357+05:00 level=INFO msg="Received AddLifeStyleData request" user_id="" data_type=string data_value=string
 time=2024-08-13T02:37:54.442+05:00 level=INFO msg="Received AddLifeStyleData request" user_id="" data_type=string data_value=string
+time=2024-08-13T08:30:52.858+05:00 level=INFO msg="Received AddMedicalReport request" user_id="" record_type=string description=string doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-13T08:32:16.422+05:00 level=INFO msg="Received AddMedicalReport request" user_id="" record_type=string description=string doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-13T08:33:08.859+05:00 level=INFO msg="Received GetMedicalReportById request" id=2aa4809b-1f78-463c-a9ef-7471f188193b
+time=2024-08-13T08:34:01.579+05:00 level=INFO msg="Received DeleteMedicalReport request" user_id=862325be-365e-4faf-8e78-a73e8e1397cd id=862325be-365e-4faf-8e78-a73e8e1397cd
+time=2024-08-13T08:35:08.963+05:00 level=INFO msg="Received UpdateMedicalReport request" user_id="" record_type=string description=string doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-13T08:35:48.165+05:00 level=INFO msg="Received AddWearableData request" user_id=iosdhfiuergsufoadf device_type=string data_type=string data_value=string
+time=2024-08-13T08:37:09.559+05:00 level=INFO msg="Received GetWearableDataById request" id=c8278189-9c09-4f28-988d-803be1008e94
+time=2024-08-13T08:37:26.423+05:00 level=INFO msg="Received GetWearableDataById request" id=572a2033-a716-4ba2-aec4-955eee49e3cc
+time=2024-08-13T08:37:39.687+05:00 level=INFO msg="Received GetWearableDataById request" id=c8278189-9c09-4f28-988d-803be1008e94
+time=2024-08-13T08:38:19.211+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=string data_type=string data_value=string
+time=2024-08-13T08:38:36.695+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=New data_type=New data_value=New
+time=2024-08-13T08:49:06.961+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=New data_type=New data_value=New
+time=2024-08-13T11:08:57.881+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 data_type=string data_value=string
+time=2024-08-13T11:13:10.036+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 data_type=Qoil data_value=Soil
+time=2024-08-13T11:27:41.386+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 data_type=Qoil data_value=Soil
+time=2024-08-13T11:27:45.355+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 data_type=Qoil data_value=Soil
+time=2024-08-13T12:31:01.239+05:00 level=INFO msg="Received GetLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874
+time=2024-08-13T12:32:10.819+05:00 level=INFO msg="Received GetLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874
+time=2024-08-13T12:32:47.983+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 data_type=Taom data_value=Ash
+time=2024-08-13T12:37:10.521+05:00 level=INFO msg="Received GetLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874
+time=2024-08-13T12:43:51.430+05:00 level=INFO msg="Received GetLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874
+time=2024-08-13T12:49:18.837+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=d2f118af-4f65-48af-ba62-6b726fc2b996 id=d2f118af-4f65-48af-ba62-6b726fc2b996
+time=2024-08-13T12:50:28.632+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=d2f118af-4f65-48af-ba62-6b726fc2b996 id=d2f118af-4f65-48af-ba62-6b726fc2b996
+time=2024-08-13T12:51:40.239+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=d2f118af-4f65-48af-ba62-6b726fc2b996 id=d2f118af-4f65-48af-ba62-6b726fc2b996
+time=2024-08-13T12:58:35.265+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=d2f118af-4f65-48af-ba62-6b726fc2b996 id=d2f118af-4f65-48af-ba62-6b726fc2b996
+time=2024-08-13T12:59:21.659+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=b000f8c9-0751-4054-88c4-b472987081c8 id=b000f8c9-0751-4054-88c4-b472987081c8
+time=2024-08-13T13:00:10.436+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=b000f8c9-0751-4054-88c4-b472987081c8 id=b000f8c9-0751-4054-88c4-b472987081c8
+time=2024-08-13T13:02:56.498+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=b000f8c9-0751-4054-88c4-b472987081c8 id=b000f8c9-0751-4054-88c4-b472987081c8
+time=2024-08-13T13:04:14.885+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 data_type=Taom data_value=Osh
+time=2024-08-13T13:05:12.336+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 data_type=Taom data_value=Osh
+time=2024-08-13T13:05:28.272+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 data_type=Taom data_value=Osh
+time=2024-08-13T13:05:56.797+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=8c798d76-0193-4079-9060-4bc2d5d89da9 id=8c798d76-0193-4079-9060-4bc2d5d89da9
+time=2024-08-13T13:08:35.729+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=8c798d76-0193-4079-9060-4bc2d5d89da9 id=8c798d76-0193-4079-9060-4bc2d5d89da9
+time=2024-08-13T13:17:45.707+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=8c798d76-0193-4079-9060-4bc2d5d89da9 id=8c798d76-0193-4079-9060-4bc2d5d89da9
+time=2024-08-13T13:18:17.674+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=8c798d76-0193-4079-9060-4bc2d5d89da9 id=8c798d76-0193-4079-9060-4bc2d5d89da9
+time=2024-08-13T13:18:19.319+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=8c798d76-0193-4079-9060-4bc2d5d89da9 id=8c798d76-0193-4079-9060-4bc2d5d89da9
+time=2024-08-13T13:19:14.378+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 data_type=Taom data_value=Osh
+time=2024-08-13T13:19:46.041+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=329d5e01-0d66-4ab6-82c7-3690232b9e25 id=329d5e01-0d66-4ab6-82c7-3690232b9e25
+time=2024-08-13T13:31:32.942+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 data_type=Taom data_value=Osh
+time=2024-08-13T13:31:58.661+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=f9e52e01-9e62-47c5-a93a-b58c5abddcda id=f9e52e01-9e62-47c5-a93a-b58c5abddcda

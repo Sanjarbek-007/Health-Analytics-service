@@ -31,13 +31,13 @@ func (r *lifeStyleRepositoryImpl) AddLifeStyleData(ctx context.Context, req *pb.
 
 	_, err := coll.InsertOne(ctx, bson.M{
 		"_id":    uuid.NewString(),
-        "user_id": req.UserId,
-        "data_type": req.DataType,
-		"data_value": req.DataValue,
-		"analysis_date": time.Now().Format("2006/01/02"),
-		"created_at": time.Now().Format("2006/01/02"),
-        "updated_at": time.Now().Format("2006/01/02"),
-        "deleted_at": 0,
+        "userId": req.UserId,
+        "dataType": req.DataType,
+		"dataValue": req.DataValue,
+		"analysisDate": time.Now().Format("2006/01/02"),
+		"createdAt": time.Now().Format("2006/01/02"),
+        "updatedAt": time.Now().Format("2006/01/02"),
+        "deletedAt": 0,
 	})
 
 	if err!= nil {
@@ -56,7 +56,7 @@ func (r *lifeStyleRepositoryImpl) GetLifeStyleData(ctx context.Context, req *pb.
 
     coll := r.coll.Collection("lifestyle")
 
-	cursor, err := coll.Find(ctx, bson.M{"$and": []bson.M{{"user_id": req.UserId}, {"deleted_at": 0}}})
+	cursor, err := coll.Find(ctx, bson.M{"$and": []bson.M{{"userId": req.UserId}, {"deletedAt": 0}}})
 	if err!= nil {
         return nil, err
     }
@@ -67,8 +67,6 @@ func (r *lifeStyleRepositoryImpl) GetLifeStyleData(ctx context.Context, req *pb.
         if err := cursor.Decode(&doc); err!= nil {
             return nil, err
         }
-        doc.FirstName = req.FirstName
-        doc.LastName = req.LastName
         user.LifeStyle = append(user.LifeStyle, &doc)
 	}
 	if err := cursor.Err(); err!= nil {
@@ -79,30 +77,30 @@ func (r *lifeStyleRepositoryImpl) GetLifeStyleData(ctx context.Context, req *pb.
 }
 
 func (r *lifeStyleRepositoryImpl) GetLifeStyleDataById(ctx context.Context, req *pb.GetLifeStyleDataByIdReq) (*pb.GetLifeStyleDataByIdRes, error) {
-    var user pb.GetLifeStyleDataByIdRes
+    var user pb.GetLifeStyleByIdRes
     coll := r.coll.Collection("lifestyle")
 
-	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"_id": req.Id}, {"deleted_at": 0}}}).Decode(&user)
+	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"_id": req.Id}, {"deletedAt": 0}}}).Decode(&user)
 	if err!= nil {
         return nil, err
     }
 
-	return &user, nil
+	return &pb.GetLifeStyleDataByIdRes{LifeStyle: &user}, nil
 }
 
 func (r *lifeStyleRepositoryImpl) UpdateLifeStyleData(ctx context.Context, req *pb.UpdateLifeStyleDataReq) (*pb.UpdateLifeStyleDataRes, error) {
     coll := r.coll.Collection("lifestyle")
 	update := bson.D{
         {Key: "$set", Value: bson.D{
-            {Key: "data_type", Value: req.DataType},
-            {Key: "data_value", Value: req.DataValue},
-            {Key: "updated_at", Value: time.Now()},
+            {Key: "dataType", Value: req.DataType},
+            {Key: "dataValue", Value: req.DataValue},
+            {Key: "updatedAt", Value: time.Now()},
         }},
     }
 
     filter := bson.D{
         {Key: "_id", Value: req.Id},
-    {Key: "deleted_at", Value: 0},
+    {Key: "deletedAt", Value: 0},
     }
 
     _, err := coll.UpdateOne(ctx, filter, update)
@@ -121,11 +119,11 @@ func (r *lifeStyleRepositoryImpl) UpdateLifeStyleData(ctx context.Context, req *
 func (r *lifeStyleRepositoryImpl) DeleteLifeStyleData(ctx context.Context, req *pb.DeleteLifeStyleDataReq) (*pb.DeleteLifeStyleDataRes, error) {
 	filter := bson.D{
         {Key: "_id", Value: req.Id},
-        {Key: "deleted_at", Value: 0},
+        {Key: "deletedAt", Value: time.Now().Unix()},
     }
     coll := r.coll.Collection("lifestyle")
 
-    _, err := coll.UpdateOne(ctx, filter, bson.D{{Key: "$set", Value: bson.D{{Key: "deleted_at", Value: time.Now().Unix()}}}})
+    _, err := coll.UpdateOne(ctx, filter, bson.D{{Key: "$set", Value: bson.D{{Key: "deleted_at", Value: 0}}}})
 
     if err!= nil {
         return &pb.DeleteLifeStyleDataRes{

@@ -31,14 +31,14 @@ func (r *wearableRepositoryImpl) AddWearableData(ctx context.Context, req *pb.Ad
 
 	_, err := coll.InsertOne(ctx, bson.M{
 		"_id":    uuid.NewString(),
-		"user_id": req.UserId,
-		"device_type": req.DeviceType,
-		"data_type": req.DataType,
-		"data_value": req.DataValue,
-		"recorded_timestamp": time.Now().Format("2006-01-02-03T15:04:05Z"),
-		"created_at": time.Now().Format("2006/01/02"),
-        "updated_at": time.Now().Format("2006/01/02"),
-		"deleted_at": 0,
+		"userId": req.UserId,
+		"deviceType": req.DeviceType,
+		"dataType": req.DataType,
+		"dataValue": req.DataValue,
+		"recordedTimestamp": time.Now().Format("2006-01-02-03T15:04:05Z"),
+		"createdAt": time.Now().Format("2006/01/02"),
+        "updatedAt": time.Now().Format("2006/01/02"),
+		"deletedAt": 0,
 	})
 	if err!= nil {
         return &pb.AddWearableDataRes{
@@ -55,7 +55,7 @@ func (r *wearableRepositoryImpl) GetWearableData(ctx context.Context, req *pb.Ge
     var data pb.GetWearableDataRes
 	coll := r.coll.Collection("wareable")
 
-	cursor, err := coll.Find(ctx, bson.M{"$and": []bson.M{{"user_id": req.UserId}, {"deleted_at": 0}}})
+	cursor, err := coll.Find(ctx, bson.M{"$and": []bson.M{{"userId": req.UserId}, {"deletedAt": 0}}})
 	if err!= nil {
         return nil, err
     }
@@ -84,7 +84,7 @@ func (r *wearableRepositoryImpl) GetWearableDataById(ctx context.Context, req *p
 	var data pb.GetWearableDataByIdRes
 	coll := r.coll.Collection("wareable")
 
-	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"_id": req.Id}, {"deleted_at": 0}}}).Decode(&data)
+	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"_id": req.Id}, {"deletedAt": 0}}}).Decode(&data)
 	if err!= nil {
         return nil, err
     }
@@ -96,16 +96,16 @@ func (r *wearableRepositoryImpl) UpdateWearableData(ctx context.Context, req *pb
 	coll := r.coll.Collection("wareable")
 	update := bson.D{
 		{Key: "$set", Value: bson.D{
-			{Key: "device_type", Value: req.DeviceType},
-            {Key: "data_type", Value: req.DataType},
-            {Key: "data_value", Value: req.DataValue},
-            {Key: "updated_at", Value: time.Now()},
+			{Key: "deviceType", Value: req.DeviceType},
+            {Key: "dataType", Value: req.DataType},
+            {Key: "dataValue", Value: req.DataValue},
+            {Key: "updatedAt", Value: time.Now()},
         }},
 	}
 
 	filter := bson.D{
         {Key: "_id", Value: req.Id},
-		{Key: "deleted_at", Value: 0},
+		{Key: "deletedAt", Value: 0},
     }
 
 	_, err := coll.UpdateOne(ctx, filter, update)
@@ -124,13 +124,13 @@ func (r *wearableRepositoryImpl) DeleteWearableData(ctx context.Context, req *pb
 	coll := r.coll.Collection("wareable")
 	update := bson.D{
 		{Key: "$set", Value: bson.D{
-			{Key: "deleted_at", Value: time.Now().Unix()},
+			{Key: "deletedAt", Value: time.Now().Unix()},
         }},
 	}
 
 	filter := bson.D{
 		{Key: "_id", Value: req.Id},
-        {Key: "deleted_at", Value: 0},
+        {Key: "deletedAt", Value: 0},
     }
 	_, err := coll.UpdateOne(ctx, filter, update)
 	if err!= nil {
