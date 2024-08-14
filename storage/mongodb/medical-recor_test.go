@@ -28,7 +28,7 @@ func TestAddMedicalReport(t *testing.T) {
   if err != nil {
     t.Fatal(err)
   }
-  assert.Equal(t, "Medical report created successfully", resp.Message)
+  assert.Equal(t, "Medical report created successfully", resp.Id)
 }
 
 func TestGetMedicalReport(t *testing.T) {

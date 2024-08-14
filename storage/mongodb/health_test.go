@@ -27,7 +27,7 @@ func TestGenerateHealthRecommendations(t *testing.T) {
   if err != nil {
     t.Fatal(err)
   }
-  assert.Equal(t, true, resp.Message)
+  assert.Equal(t, true, resp.Id)
 }
 
 func TestGetRealtimeHealthMonitoring(t *testing.T) {

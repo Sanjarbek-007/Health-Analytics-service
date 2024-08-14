@@ -2,7 +2,9 @@ package storage
 
 import (
 	"health-service/storage/mongodb"
+	rediss "health-service/storage/redis"
 
+	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -11,14 +13,16 @@ type IStorage interface {
 	LifeStyleRepository() mongodb.LifeStyleRepository
 	MedicalRecordRepository() mongodb.MedicalRecordRepository
 	WearableRepository() mongodb.WearableRepository
+	MonitoringRepository() rediss.HealthMonito
 }
 
 type storageImpl struct {
-	db *mongo.Database
+	db  *mongo.Database
+	rdb *redis.Client
 }
 
-func NewStorage(db *mongo.Database) IStorage {
-	return &storageImpl{db: db}
+func NewStorage(db *mongo.Database, rdb *redis.Client) IStorage {
+	return &storageImpl{db: db, rdb: rdb}
 }
 
 func (s *storageImpl) HealthRepository() mongodb.HealthRepository {
@@ -35,4 +39,8 @@ func (s *storageImpl) MedicalRecordRepository() mongodb.MedicalRecordRepository 
 
 func (s *storageImpl) WearableRepository() mongodb.WearableRepository {
 	return mongodb.NewWearableRepository(s.db)
+}
+
+func (s *storageImpl) MonitoringRepository() rediss.HealthMonito {
+	return rediss.NewHealthMonitorRepo(s.rdb)
 }

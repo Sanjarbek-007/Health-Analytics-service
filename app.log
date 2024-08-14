@@ -46,3 +46,96 @@ time=2024-08-13T13:19:14.378+05:00 level=INFO msg="Received AddLifeStyleData req
 time=2024-08-13T13:19:46.041+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=329d5e01-0d66-4ab6-82c7-3690232b9e25 id=329d5e01-0d66-4ab6-82c7-3690232b9e25
 time=2024-08-13T13:31:32.942+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 data_type=Taom data_value=Osh
 time=2024-08-13T13:31:58.661+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=f9e52e01-9e62-47c5-a93a-b58c5abddcda id=f9e52e01-9e62-47c5-a93a-b58c5abddcda
+time=2024-08-13T13:46:44.132+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=f9e52e01-9e62-47c5-a93a-b58c5abddcda id=f9e52e01-9e62-47c5-a93a-b58c5abddcda
+time=2024-08-13T13:46:57.229+05:00 level=INFO msg="Received GetLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874
+time=2024-08-13T13:46:59.215+05:00 level=INFO msg="Received GetLifeStyleData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874
+time=2024-08-13T13:49:48.043+05:00 level=INFO msg="Received AddMedicalReport request" user_id="" record_type=Rengen description="Broken Leg" doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"jfskdalhgiudfh\" file_url:\"jfskdalhgdsfdsgdfiudfh\"]"
+time=2024-08-13T13:51:52.214+05:00 level=INFO msg="Received GetMedicalReportById request" id=3aa36838-d24b-4b72-b561-54a5e4fc9eba
+time=2024-08-13T13:53:41.083+05:00 level=INFO msg="Received AddMedicalReport request" user_id="" record_type=Rengen description="Broken Leg" doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"jfskdalhgiudfh\" file_url:\"jfskdalhgdsfdsgdfiudfh\"]"
+time=2024-08-13T14:06:06.369+05:00 level=INFO msg="Received AddMedicalReport request" user_id=fc2dff28-af76-40bd-a3c6-40b0e9e07d31 record_type=Rengen description="Bad situation" doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"string\"]"
+time=2024-08-13T14:10:55.349+05:00 level=INFO msg="Received GetMedicalReportById request" id=505623d7-ad79-40b2-a6a3-2c620a5f6cb8
+time=2024-08-13T14:11:17.722+05:00 level=INFO msg="Received DeleteMedicalReport request" user_id=3aa36838-d24b-4b72-b561-54a5e4fc9eba id=3aa36838-d24b-4b72-b561-54a5e4fc9eba
+time=2024-08-13T14:16:17.443+05:00 level=INFO msg="Received UpdateMedicalReport request" user_id="" record_type=string description=string doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-13T14:23:45.438+05:00 level=INFO msg="Received UpdateMedicalReport request" user_id="" record_type=string description=string doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-13T14:32:31.125+05:00 level=INFO msg="Received AddWearableData request" user_id=string device_type="Qon bosimi olchagich" data_type=Davlenya data_value=120.80
+time=2024-08-13T14:32:32.985+05:00 level=INFO msg="Received AddWearableData request" user_id=string device_type="Qon bosimi olchagich" data_type=Davlenya data_value=120.80
+time=2024-08-13T14:33:14.366+05:00 level=INFO msg="Received DeleteWearableData request" user_id=b81a3ba4-25dc-41a4-90e5-01f49b1a0092 id=b81a3ba4-25dc-41a4-90e5-01f49b1a0092
+time=2024-08-13T14:33:41.720+05:00 level=INFO msg="Received GetWearableDataById request" id=78130656-6b78-44b7-bd2f-4868e93c415d
+time=2024-08-13T14:34:52.230+05:00 level=INFO msg="Received GetWearableDataById request" id=78130656-6b78-44b7-bd2f-4868e93c415d
+time=2024-08-13T14:58:58.860+05:00 level=INFO msg="Received GetWearableData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874
+time=2024-08-13T14:59:40.619+05:00 level=INFO msg="Received GetWearableData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874
+time=2024-08-13T15:01:05.434+05:00 level=INFO msg="Received AddWearableData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 device_type="Qon bosimi olchagich" data_type=Davlenya data_value=120.80
+time=2024-08-13T15:01:37.141+05:00 level=INFO msg="Received GetWearableDataById request" id=78130656-6b78-44b7-bd2f-4868e93c415d
+time=2024-08-13T15:01:42.052+05:00 level=INFO msg="Received GetWearableData request" user_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874
+time=2024-08-13T15:02:08.274+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-13T21:27:41.357+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 data_type=Taom data_value=Osh
+time=2024-08-13T21:28:08.441+05:00 level=INFO msg="Received DeleteLifeStyleData request" user_id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7 id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7
+time=2024-08-13T21:28:41.985+05:00 level=INFO msg="Received DeleteLifeStyleData request" user_id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7 id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7
+time=2024-08-13T21:29:10.559+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7 id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7
+time=2024-08-13T21:30:26.629+05:00 level=INFO msg="Received UpdateLifeStyleData request" user_id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7 data_type=Zor data_value=Zor id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7
+time=2024-08-13T21:32:12.491+05:00 level=INFO msg="Received DeleteLifeStyleData request" user_id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7 id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7
+time=2024-08-13T21:34:41.015+05:00 level=INFO msg="Received DeleteLifeStyleData request" user_id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7 id=10aeb9ea-f2a9-4a25-bbef-5d21c44c78f7
+time=2024-08-13T21:35:45.912+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 data_type=Taom data_value=Osh
+time=2024-08-13T21:36:01.873+05:00 level=INFO msg="Received GetLifeStyleData request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:38:03.212+05:00 level=INFO msg="Received AddMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 record_type=string description=string doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-13T21:44:23.003+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:44:59.825+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:47:11.751+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:49:21.167+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:51:15.612+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:51:25.676+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:51:52.306+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:51:56.632+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:51:57.126+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:51:57.548+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:51:57.688+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:52:33.354+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:52:58.355+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:53:17.301+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T21:53:37.571+05:00 level=INFO msg="Received GetMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9
+time=2024-08-13T22:03:30.575+05:00 level=INFO msg="Received GetMedicalReportById request" id=cc289881-f1ad-4fb2-a173-8d01a9fe0286
+time=2024-08-13T22:04:15.914+05:00 level=INFO msg="Received UpdateMedicalReport request" user_id="" record_type=string description=NewNew doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-13T22:05:37.458+05:00 level=INFO msg="Received DeleteMedicalReport request" user_id=cc289881-f1ad-4fb2-a173-8d01a9fe0286 id=cc289881-f1ad-4fb2-a173-8d01a9fe0286
+time=2024-08-13T22:06:05.287+05:00 level=INFO msg="Received AddMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 record_type=string description=string doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-13T22:08:31.139+05:00 level=INFO msg="Received GetWearableDataById request" id=78130656-6b78-44b7-bd2f-4868e93c415d
+time=2024-08-13T22:13:16.560+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=string data_type=string data_value=120.90
+time=2024-08-13T22:14:02.769+05:00 level=INFO msg="Received DeleteWearableData request" user_id=78130656-6b78-44b7-bd2f-4868e93c415d id=78130656-6b78-44b7-bd2f-4868e93c415d
+time=2024-08-14T07:14:24.932+05:00 level=INFO msg="Received UpdateMedicalReport request" user_id="" record_type=string description="OK Normal Good" doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-14T07:16:35.566+05:00 level=INFO msg="Received UpdateMedicalReport request" user_id=090af8eb-6131-4d5c-8f52-d85e0631a1c2 record_type=string description="Well done" doctor_id=string attachments="[file_url:\"string\"]"
+time=2024-08-14T07:57:44.740+05:00 level=INFO msg="Received GetMedicalReportById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T07:59:24.649+05:00 level=INFO msg="Received GetMedicalReportById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:02:28.851+05:00 level=INFO msg="Received GetMedicalReportById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:03:32.131+05:00 level=INFO msg="Received GetMedicalReportById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:03:53.429+05:00 level=INFO msg="Received GetMedicalReportById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:05:34.493+05:00 level=INFO msg="Received GetMedicalReportById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:12:25.122+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:14:24.726+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:15:39.379+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:17:45.635+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:18:00.613+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:18:37.819+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:20:05.528+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:20:56.279+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:24:27.687+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T08:25:15.823+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T10:47:46.656+05:00 level=INFO msg="Received AddLifeStyleData request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 data_type=sleep data_value="2 hours"
+time=2024-08-14T10:48:36.856+05:00 level=INFO msg="Received DeleteLifeStyleData request" user_id=56ff3b3f-183a-4af5-b155-2dfeade4bdfd id=56ff3b3f-183a-4af5-b155-2dfeade4bdfd
+time=2024-08-14T10:49:08.235+05:00 level=INFO msg="Received GetLifeStyleDataById request" user_id=48f315f9-13d6-4e62-a370-e3de65b096d8 id=48f315f9-13d6-4e62-a370-e3de65b096d8
+time=2024-08-14T11:15:28.954+05:00 level=INFO msg="Received AddMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 record_type=uzi description=rasvo doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"uzi.png\"]"
+time=2024-08-14T11:16:37.725+05:00 level=INFO msg="Received AddMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 record_type=uzi description=rasvo doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"uzi.png\"]"
+time=2024-08-14T11:17:20.592+05:00 level=INFO msg="Received AddMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 record_type=uzi description=rasvo doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"uzi.png\"]"
+time=2024-08-14T11:17:50.375+05:00 level=INFO msg="Received AddMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 record_type=uzi description=rasvo doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"uzi.png\"]"
+time=2024-08-14T11:17:50.504+05:00 level=INFO msg="Received AddMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 record_type=uzi description=rasvo doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"uzi.png\"]"
+time=2024-08-14T11:17:50.656+05:00 level=INFO msg="Received AddMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 record_type=uzi description=rasvo doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"uzi.png\"]"
+time=2024-08-14T11:17:50.782+05:00 level=INFO msg="Received AddMedicalReport request" user_id=556756fa-50b6-4ef8-88fa-0c2c1da8eef9 record_type=uzi description=rasvo doctor_id=3f694c57-e2fd-4cbb-8c8d-e2be58f45874 attachments="[file_url:\"uzi.png\"]"
+time=2024-08-14T13:03:03.772+05:00 level=INFO msg="Received GetWearableDataById request" id=1a8413d5-ed1b-4728-81e9-cdb437eda240
+time=2024-08-14T13:29:06.554+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=string data_type=string data_value=130.90
+time=2024-08-14T13:44:18.828+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=string data_type=string data_value=130.90
+time=2024-08-14T13:46:13.703+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=string data_type=string data_value=130.90
+time=2024-08-14T13:47:37.202+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=string data_type=string data_value=130.90
+time=2024-08-14T13:48:39.832+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=string data_type=string data_value=130.90
+time=2024-08-14T13:49:26.635+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=string data_type=string data_value=130.90
+time=2024-08-14T13:49:49.266+05:00 level=INFO msg="Received UpdateWearableData request" user_id="" device_type=string data_type=string data_value=130.90
+time=2024-08-14T13:54:25.378+05:00 level=INFO msg="Received UpdateWearableData request" user_id=1a8413d5-ed1b-4728-81e9-cdb437eda240 device_type=string data_type=string data_value=130.90
+time=2024-08-14T15:03:29.867+05:00 level=INFO msg="Received GetDailyHealthSummary request" user_id=fc2dff28-af76-40bd-a3c6-40b0e9e07d31 start_date=2024-08-13
+time=2024-08-14T15:04:00.863+05:00 level=INFO msg="Received GetDailyHealthSummary request" user_id=fc2dff28-af76-40bd-a3c6-40b0e9e07d31 start_date=2024/08/13

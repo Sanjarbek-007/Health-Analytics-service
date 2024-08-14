@@ -26,7 +26,7 @@ func TestAddWearableData(t *testing.T) {
   if err != nil {
     t.Fatal(err)
   }
-  assert.Equal(t, true, resp.Message)
+  assert.Equal(t, true, resp.Id)
 }
 
 func TestGetWearableData(t *testing.T) {

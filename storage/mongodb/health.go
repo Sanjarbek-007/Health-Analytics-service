@@ -27,34 +27,33 @@ func NewHealthRepository(db *mongo.Database) HealthRepository {
 }
 
 func (r *healthRepositoryImpl) GenerateHealthRecommendations(ctx context.Context, req *pb.GenerateHealthRecommendationsReq) (*pb.GenerateHealthRecommendationsRes, error) {
-	coll:=r.coll.Collection("health")
+	coll := r.coll.Collection("health")
+	id := uuid.NewString()
 
 	_, err := coll.InsertOne(ctx, bson.M{
-		"_id":    uuid.NewString(),
-		"userId": req.UserId,
+		"_id":                id,
+		"userId":             req.UserId,
 		"recommendationType": req.RecommendationType,
-		"description": req.Description,
-        "priority":    req.Priority,
-		"createdAt": time.Now().Format("2006/01/02"),
-		"updatedAt": time.Now().Format("2006/01/02"),
-		"deletedAt":  0,
+		"description":        req.Description,
+		"priority":           req.Priority,
+		"createdAt":          time.Now(),
+		"updatedAt":          time.Now(),
+		"deletedAt":          0,
 	})
-	if err!= nil {
-        return &pb.GenerateHealthRecommendationsRes{
-			Message: false,
-		}, err
-    }
+	if err != nil {
+		return nil, err
+	}
 
 	return &pb.GenerateHealthRecommendationsRes{
-        Message: true,
-    }, nil
+		Id: id,
+	}, nil
 }
 
 func (r *healthRepositoryImpl) GetRealtimeHealthMonitoring(ctx context.Context, req *pb.GetRealtimeHealthMonitoringReq) (*pb.GetRealtimeHealthMonitoringRes, error) {
 	var user pb.GetRealtimeHealthMonitoringRes
-	coll:=r.coll.Collection("health")
+	coll := r.coll.Collection("health")
 
-	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"userId": req.UserId}, {"deletedAt": 0}, {"createdAt": time.Now().Format("2006/01/02")}}}).Decode(&user)
+	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"userId": req.UserId}, {"deletedAt": 0}, {"createdAt": time.Now()}}}).Decode(&user)
 	if err != nil {
 		return nil, fmt.Errorf("realtime health monitoring not found")
 	}
@@ -64,21 +63,21 @@ func (r *healthRepositoryImpl) GetRealtimeHealthMonitoring(ctx context.Context, 
 
 func (r *healthRepositoryImpl) GetDailyHealthSummary(ctx context.Context, req *pb.GetDailyHealthSummaryReq) (*pb.GetDailyHealthSummaryRes, error) {
 	var summary pb.GetDailyHealthSummaryRes
-	coll:=r.coll.Collection("health")
+	coll := r.coll.Collection("health")
 
 	err := coll.FindOne(ctx, bson.M{"$and": []bson.M{{"userId": req.UserId}, {"deletedAt": 0}, {"createdAt": req.Date}}}).Decode(&summary)
-	if err!= nil {
-        return nil, err
-    }
+	if err != nil {
+		return nil, err
+	}
 
 	return &summary, nil
 }
 
 func (r *healthRepositoryImpl) GetWeeklyHealthSummary(ctx context.Context, req *pb.GetWeeklyHealthSummaryReq) (*pb.GetWeeklyHealthSummaryRes, error) {
 	var summary pb.GetWeeklyHealthSummaryRes
-	coll:=r.coll.Collection("health")
+	coll := r.coll.Collection("health")
 
-    cursor, err := coll.Find(ctx, bson.M{
+	cursor, err := coll.Find(ctx, bson.M{
 		"$and": []bson.M{
 			{"userId": req.UserId},
 			{"deletedAt": 0},
@@ -89,25 +88,25 @@ func (r *healthRepositoryImpl) GetWeeklyHealthSummary(ctx context.Context, req *
 		},
 	})
 
-	if err!= nil {
-        return nil, err
-    }
+	if err != nil {
+		return nil, err
+	}
 
 	defer cursor.Close(ctx)
 
-    for cursor.Next(ctx) {
-        var doc pb.HealthRecommendation
-        if err := cursor.Decode(&doc); err != nil {
-            return nil, fmt.Errorf("error decoding document: %v", err)
-        }
-		doc.FirstName=req.FirstName
-		doc.LastName=req.LastName
-        summary.Recommendations = append(summary.Recommendations, &doc)
-    }
+	for cursor.Next(ctx) {
+		var doc pb.HealthRecommendation
+		if err := cursor.Decode(&doc); err != nil {
+			return nil, fmt.Errorf("error decoding document: %v", err)
+		}
+		doc.FirstName = req.FirstName
+		doc.LastName = req.LastName
+		summary.Recommendations = append(summary.Recommendations, &doc)
+	}
 
-    if err := cursor.Err(); err != nil {
-        return nil, fmt.Errorf("cursor error: %v", err)
-    }
+	if err := cursor.Err(); err != nil {
+		return nil, fmt.Errorf("cursor error: %v", err)
+	}
 
-    return &summary, nil
+	return &summary, nil
 }

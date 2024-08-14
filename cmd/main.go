@@ -14,20 +14,29 @@ import (
 	"net"
 
 	mongodb "health-service/storage/mongodb"
+	rediss "health-service/storage/redis"
 
+	"github.com/redis/go-redis/v9"
+	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"
 )
+
+var Mdb *mongo.Database
+var Rdb *redis.Client
+var err error
 
 func main() {
 	logger := logs.NewLogger()
 	cfg := config.Load()
 
-	mdb, err := mongodb.ConnectMongoDB()
+	Mdb, err = mongodb.ConnectMongoDB()
 	if err != nil {
 		logger.Error("Failed to connect to MongoDB", "error", err)
 	}
 
-	storage := storage.NewStorage(mdb)
+	Rdb = rediss.ConnectRDB()
+
+	storage := storage.NewStorage(Mdb, Rdb)
 
 	listener, err := net.Listen("tcp", cfg.HEALTH_SERVICE)
 	if err != nil {
@@ -48,12 +57,8 @@ func main() {
 	health.RegisterWearableServer(s, serviceWearable)
 
 	log.Printf("Server run: %v", cfg.HEALTH_SERVICE)
-	if err = s.Serve(listener); err != nil {
-		logger.Error(err.Error())
-		panic(err)
-	}
 
-	reader, err := kafka.NewKafkaConsumInit([]string{"kafka:9092"}, "delete", "group")
+	reader, err := kafka.NewKafkaConsumInit([]string{"kafka:9092"}, "health", "group")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -63,27 +68,60 @@ func main() {
 		reader.ComsumeMessages(ComsumeMessage)
 	}()
 
+	wear, err := kafka.NewKafkaConsumInit([]string{"kafka:9092"}, "wear", "group")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer wear.Close()
+
+	go func() {
+		wear.ComsumeMessages(WerableCreateMessage)
+	}()
+
+	fmt.Println("everything is ok")
+
 	err = s.Serve(listener)
 	if err != nil {
 		log.Fatalf("error while serving: %v", err)
 	}
+	// if err = s.Serve(listener); err != nil {
+	// 	logger.Error(err.Error())
+	// 	panic(err)
+	// }
 }
 
 func ComsumeMessage(message []byte) {
 	fmt.Println("Consume message: ", string(message))
-	db, err := mongodb.ConnectMongoDB()
-	if err != nil {
-		panic(err)
-	}
+
 	var req health.GenerateHealthRecommendationsReq
 	err = json.Unmarshal(message, &req)
 	if err != nil {
 		fmt.Printf("error unmarshalling message: %v\n", err)
 		return
 	}
-	storage := storage.NewStorage(db)
+	storage := storage.NewStorage(Mdb, Rdb)
 
 	_, err = storage.HealthRepository().GenerateHealthRecommendations(context.Background(), &req)
+	if err != nil {
+		fmt.Printf("error delete language: %v\n", err)
+		return
+	}
+}
+
+func WerableCreateMessage(message []byte) {
+	fmt.Println("Wear Message: ", string(message))
+
+	var req health.AddWearableDataReq
+
+	err = json.Unmarshal(message, &req)
+	if err != nil {
+		fmt.Printf("error unmarshalling message: %v\n", err)
+		return
+	}
+
+	storage := storage.NewStorage(Mdb, Rdb)
+
+	_, err = storage.WearableRepository().AddWearableData(context.Background(), &req)
 	if err != nil {
 		fmt.Printf("error delete language: %v\n", err)
 		return

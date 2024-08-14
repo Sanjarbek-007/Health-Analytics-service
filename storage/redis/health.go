@@ -1,75 +1,58 @@
-package redis
+package rediss
 
-// import (
-// 	"context"
-// 	"encoding/json"
-// 	"fmt"
-// 	"health-service/genproto/health"
+import (
+	"context"
+	"encoding/json"
+	"fmt"
 
-// 	"github.com/redis/go-redis/v9"
-// )
+	pb "health-service/genproto/health"
 
-// type RealTimeRepository interface {
-// 	AddRealTimeData(ctx context.Context, in *health.AddRealTimeDataReq) (*health.AddRealTimeDataRes, error)
-// 	GetRealTimeData(ctx context.Context, in *health.GetRealTimeDataReq) (*health.GetRealTimeDataRes, error)
-// }
+	"github.com/redis/go-redis/v9"
+)
 
-// type realTimeRepositoryImpl struct {
-//     redis *redis.Client
-// }
+type HealthMonito interface {
+	CreateHealthMonitor(ctx context.Context, req *pb.CreateHealthMonitorReq) error
+	GetHealthMonitor(ctx context.Context, userID *pb.UserId) (*pb.GetHealthMonitorsRes, error)
+}
 
-// type RealTimeData struct {
-// 	UserId     string  `json:"user_id"`
-// 	Data   string  `json:"data_type"`
-// }
+type healthMonitorImpl struct {
+	RedisClient *redis.Client
+}
 
-// func NewRealTimeRepository(client *redis.Client) RealTimeRepository {
-//     return &realTimeRepositoryImpl{redis: client}
-// }
+func NewHealthMonitorRepo(redisClient *redis.Client) HealthMonito {
+	return &healthMonitorImpl{
+		RedisClient: redisClient,
+	}
+}
 
-// func (b *realTimeRepositoryImpl) AddRealTimeData(ctx context.Context, in *health.AddRealTimeDataReq) (*health.AddRealTimeDataRes, error){
-// 	data, err := json.Marshal(in)
-// 	if err != nil {
-// 		return nil, err
-// 	}
+func (r *healthMonitorImpl) CreateHealthMonitor(ctx context.Context, req *pb.CreateHealthMonitorReq) error {
+	value, err := json.Marshal(req)
+	if err != nil {
+		return fmt.Errorf("failed to marshal CreateHealthMonitorReq: %w", err)
+	}
+	err = r.RedisClient.Set(ctx, req.GetUserId(), value, 0).Err()
+	if err != nil {
+		return fmt.Errorf("failed to store data in Redis: %w", err)
+	}
 
-// 	err = b.redis.RPush(ctx, in.UserId, data).Err()
-// 	if err != nil {
-// 		return nil, err
-// 	}
+	return nil
+}
 
-// 	return &health.AddRealTimeDataRes{
-// 		Message: true,
-// 	}, nil
-// }
+func (r *healthMonitorImpl) GetHealthMonitor(ctx context.Context, userID *pb.UserId) (*pb.GetHealthMonitorsRes, error) {
+	val, err := r.RedisClient.Get(ctx, userID.GetUserId()).Result()
+	fmt.Println(userID.UserId)
+	if err != nil {
+		if err == redis.Nil {
+			return nil, fmt.Errorf("no data found for user_id: %s", userID.GetUserId())
+		}
+		return nil, fmt.Errorf("failed to get data from Redis: %w", err)
+	}
 
+	var res pb.GetHealthMonitorsRes
+	err = json.Unmarshal([]byte(val), &res)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal data: %w", err)
+	}
 
-// func (b *realTimeRepositoryImpl) GetRealTimeData(ctx context.Context, in *health.GetRealTimeDataReq) (*health.GetRealTimeDataRes, error) {
-//     // Fetch data from Redis (assuming you need the last entry)
-//     data, err := b.redis.LIndex(ctx, in.UserId, -1).Result()
-//     if err != nil {
-//         return nil, fmt.Errorf("failed to fetch data from Redis: %w", err)
-//     }
-
-//     // Unmarshal the data into RealTimeData struct
-//     var realTimeData health.GetRealTimeDataRes
-//     err = json.Unmarshal([]byte(data), &realTimeData)
-//     if err != nil {
-//         return nil, fmt.Errorf("failed to unmarshal data: %w", err)
-//     }
-
-//     // Return the result
-//     return &health.GetRealTimeDataRes{
-//         UserId: realTimeData.UserId,
-// 		RecommendationType: realTimeData.RecommendationType,
-// 		DescriptionRecommendation: realTimeData.DescriptionRecommendation,
-//         Priority: realTimeData.Priority,
-// 		RecordType: realTimeData.RecordType,
-//         DescriptionRecord: realTimeData.DescriptionRecord,
-//         DataType: realTimeData.DataType,
-// 		DataValue: realTimeData.DataValue,
-// 		DeviceType: realTimeData.DeviceType,
-// 		DeviceDataType: realTimeData.DeviceDataType,
-//         DeviceDataValue: realTimeData.DeviceDataValue,
-//     }, nil
-// }
+	return &res, nil
+}

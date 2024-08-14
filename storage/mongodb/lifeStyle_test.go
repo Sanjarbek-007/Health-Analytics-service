@@ -26,7 +26,7 @@ func TestAddLifeStyleData(t *testing.T) {
   if err != nil {
     t.Fatal(err)
   }
-  assert.Equal(t, true, resp.Message)
+  assert.Equal(t, true, resp.Id)
 }
 
 func TestGetLifeStyleData(t *testing.T) {

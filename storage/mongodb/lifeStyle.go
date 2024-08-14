@@ -28,9 +28,10 @@ func NewLifeStyleRepository(db *mongo.Database) LifeStyleRepository {
 
 func (r *lifeStyleRepositoryImpl) AddLifeStyleData(ctx context.Context, req *pb.AddLifeStyleDataReq) (*pb.AddLifeStyleDataRes, error) {
     coll := r.coll.Collection("lifestyle")
+    id := uuid.NewString()
 
 	_, err := coll.InsertOne(ctx, bson.M{
-		"_id":    uuid.NewString(),
+		"_id":    id,
         "userId": req.UserId,
         "dataType": req.DataType,
 		"dataValue": req.DataValue,
@@ -41,13 +42,11 @@ func (r *lifeStyleRepositoryImpl) AddLifeStyleData(ctx context.Context, req *pb.
 	})
 
 	if err!= nil {
-        return &pb.AddLifeStyleDataRes{
-            Message: false,
-        }, err
+        return nil, err
     }
 
 	return &pb.AddLifeStyleDataRes{
-		Message: true,
+		Id: id,
 	}, err
 }
 
@@ -117,13 +116,12 @@ func (r *lifeStyleRepositoryImpl) UpdateLifeStyleData(ctx context.Context, req *
 }
 
 func (r *lifeStyleRepositoryImpl) DeleteLifeStyleData(ctx context.Context, req *pb.DeleteLifeStyleDataReq) (*pb.DeleteLifeStyleDataRes, error) {
-	filter := bson.D{
-        {Key: "_id", Value: req.Id},
-        {Key: "deletedAt", Value: time.Now().Unix()},
-    }
+	update := bson.D{{Key: "$set", Value: bson.D{{Key: "deletedAt", Value: time.Now().Unix()}}}}
+
+	filter := bson.D{{Key: "_id", Value: req.Id}, {Key: "deletedAt", Value: 0}}
     coll := r.coll.Collection("lifestyle")
 
-    _, err := coll.UpdateOne(ctx, filter, bson.D{{Key: "$set", Value: bson.D{{Key: "deleted_at", Value: 0}}}})
+    _, err := coll.UpdateOne(ctx, filter, update)
 
     if err!= nil {
         return &pb.DeleteLifeStyleDataRes{

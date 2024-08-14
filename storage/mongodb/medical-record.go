@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type MedicalRecordRepository interface {
@@ -29,62 +30,77 @@ func NewMedicalRecordRepository(db *mongo.Database) MedicalRecordRepository {
 
 func (r *medicalRecordRepositoryImpl) AddMedicalReport(ctx context.Context, req *pb.AddMedicalReportReq) (*pb.AddMedicalReportRes, error) {
 	coll := r.coll.Collection("medical_record")
+	id := uuid.NewString()
 
 	_, err := coll.InsertOne(ctx, bson.M{
-		"_id":         uuid.NewString(),
-		"userId":     req.UserId,
-		"recordType": req.RecordType,
-		"recordDate": time.Now().Format("2006/01/02"),
+		"_id":         id,
+		"userId":      req.UserId,
+		"recordType":  req.RecordType,
+		"recordDate":  time.Now().Format("2006/01/02"),
 		"description": req.Description,
-		"doctorId":   req.DoctorId,
+		"doctorId":    req.DoctorId,
 		"attachments": req.Attachments,
-		"createdAt":  time.Now().Format("2006/01/02"),
-		"updatedAt":  time.Now().Format("2006/01/02"),
-		"deletedAt":  0,
+		"createdAt":   time.Now().Format("2006/01/02"),
+		"updatedAt":   time.Now().Format("2006/01/02"),
+		"deletedAt":   0,
 	})
 	if err != nil {
-		return &pb.AddMedicalReportRes{
-			Message: "Medical report creation failed",
-		}, err
+		return nil, err
 	}
 
 	return &pb.AddMedicalReportRes{
-		Message: "Medical report created successfully",
+		Id: id,
 	}, err
 }
 
+// 1152345678902345678909876543456789876543456789876543234567898765433456789987654323456789876543234567887654
 func (r *medicalRecordRepositoryImpl) GetMedicalReport(ctx context.Context, req *pb.GetMedicalReportReq) (*pb.GetMedicalReportRes, error) {
-	var record pb.GetMedicalReportRes
 	coll := r.coll.Collection("medical_record")
-	cursor, err := coll.Find(ctx, bson.M{
-		"$and": bson.D{
-			{Key: "userId", Value: req.UserId},
-			{Key: "deletedAt", Value: 0},
-		},
-	})
-	if err != nil {
-		fmt.Println("dfadfjkasdfhadsfudshfdsgfgdsyf")
-		return nil, err
+	filter := bson.M{
+		"userId":    req.UserId,
+		"deletedAt": 0,
 	}
 
+	options := options.Find()
+	if req.Limit > 0 {
+		options.SetLimit(int64(req.Limit))
+	}
+	if req.Offset > 0 {
+		options.SetSkip(int64(req.Offset))
+	}
+
+	cursor, err := coll.Find(ctx, filter, options)
+	if err != nil {
+		return nil, fmt.Errorf("failed to execute query: %v", err)
+	}
 	defer cursor.Close(ctx)
+
+	var records []*pb.MedicalReport
 	for cursor.Next(ctx) {
-		var doc pb.MedicalReport
-		err := cursor.Decode(&doc)
-		if err != nil {
-			fmt.Println("Error decoding document: ", err)
-			return nil, err
+		var record pb.MedicalReport
+		if err := cursor.Decode(&record); err != nil {
+			return nil, fmt.Errorf("failed to decode record: %v", err)
 		}
-		doc.FirstName = req.FirstName
-		doc.LastName = req.LastName
-		record.MedicalReport = append(record.MedicalReport, &doc)
+		records = append(records, &pb.MedicalReport{
+			Id:          record.Id,
+			RecordType:  record.RecordType,
+			RecordDate:  record.RecordDate,
+			Description: record.Description,
+			DoctorId:    record.DoctorId,
+			Attachments: record.Attachments,
+			FirstName:   record.FirstName,
+			LastName:    record.LastName,
+		})
 	}
-	fmt.Println(&record)
+
 	if err := cursor.Err(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("cursor error: %v", err)
 	}
-	fmt.Println(&record)
-	return &record, nil
+
+	return &pb.GetMedicalReportRes{
+		MedicalReport: records,
+	}, nil
+
 }
 
 func (r *medicalRecordRepositoryImpl) GetMedicalReportById(ctx context.Context, req *pb.GetMedicalReportByIdReq) (*pb.GetMedicalReportByIdRes, error) {
@@ -100,29 +116,45 @@ func (r *medicalRecordRepositoryImpl) GetMedicalReportById(ctx context.Context, 
 }
 
 func (r *medicalRecordRepositoryImpl) UpdateMedicalReport(ctx context.Context, req *pb.UpdateMedicalReportReq) (*pb.UpdateMedicalReportRes, error) {
-	update := bson.D{
-		{Key: "$set", Value: bson.D{
-			{Key: "recordType", Value: req.RecordType},
-			{Key: "description", Value: req.Description},
-			{Key: "doctorId", Value: req.DoctorId},
-			{Key: "attachments", Value: req.Attachments},
-			{Key: "updatedAt", Value: time.Now().Format("2006/01/02")},
-		}},
-	}
 	coll := r.coll.Collection("medical_record")
+	id := req.GetId()
 
-	filter := bson.D{{Key: "_id", Value: req.Id}, {Key: "deletedAt", Value: 0}}
+	filter := bson.M{"_id": id}
 
-	_, err := coll.UpdateOne(ctx, filter, update)
-	if err != nil {
-		return &pb.UpdateMedicalReportRes{
-			Message: false,
-		}, err
+	update := bson.M{}
+
+	if req.RecordType != "" {
+		update["recordType"] = req.RecordType
+	}
+	if req.Description != "" {
+		update["description"] = req.Description
+	}
+	if req.DoctorId != "" {
+		update["doctorId"] = req.DoctorId
+	}
+	if len(req.Attachments) > 0 {
+		update["attachments"] = req.Attachments
 	}
 
-	return &pb.UpdateMedicalReportRes{
-		Message: true,
-	}, nil
+	if len(update) == 0 {
+		return nil, fmt.Errorf("no fields to update")
+	}
+
+	update["updatedAt"] = time.Now()
+
+	update = bson.M{"$set": update}
+
+	result, err := coll.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update medical record: %w", err)
+	}
+
+	if result.MatchedCount == 0 {
+		return nil, fmt.Errorf("no medical record found with id: %s", req.GetId())
+	}
+
+	return nil, nil
+
 }
 
 func (r *medicalRecordRepositoryImpl) DeleteMedicalReport(ctx context.Context, req *pb.DeleteMedicalReportReq) (*pb.DeleteMedicalReportRes, error) {
