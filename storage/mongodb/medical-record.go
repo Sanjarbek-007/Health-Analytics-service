@@ -55,52 +55,51 @@ func (r *medicalRecordRepositoryImpl) AddMedicalReport(ctx context.Context, req 
 
 // 1152345678902345678909876543456789876543456789876543234567898765433456789987654323456789876543234567887654
 func (r *medicalRecordRepositoryImpl) GetMedicalReport(ctx context.Context, req *pb.GetMedicalReportReq) (*pb.GetMedicalReportRes, error) {
-	coll := r.coll.Collection("medical_record")
-	filter := bson.M{
-		"userId":    req.UserId,
-		"deletedAt": 0,
-	}
+    coll := r.coll.Collection("medical_record")
+    filter := bson.M{
+        "userId":    req.UserId,
+        "deletedAt": 0,
+    }
 
-	options := options.Find()
-	if req.Limit > 0 {
-		options.SetLimit(int64(req.Limit))
-	}
-	if req.Offset > 0 {
-		options.SetSkip(int64(req.Offset))
-	}
+    options := options.Find()
+    if req.Limit > 0 {
+        options.SetLimit(int64(req.Limit))
+    }
+    if req.Offset > 0 {
+        options.SetSkip(int64(req.Offset))
+    }
 
-	cursor, err := coll.Find(ctx, filter, options)
-	if err != nil {
-		return nil, fmt.Errorf("failed to execute query: %v", err)
-	}
-	defer cursor.Close(ctx)
+    cursor, err := coll.Find(ctx, filter, options)
+    if err != nil {
+        return nil, fmt.Errorf("failed to execute query: %v", err)
+    }
+    defer cursor.Close(ctx)
 
-	var records []*pb.MedicalReport
-	for cursor.Next(ctx) {
-		var record pb.MedicalReport
-		if err := cursor.Decode(&record); err != nil {
-			return nil, fmt.Errorf("failed to decode record: %v", err)
-		}
-		records = append(records, &pb.MedicalReport{
-			Id:          record.Id,
-			RecordType:  record.RecordType,
-			RecordDate:  record.RecordDate,
-			Description: record.Description,
-			DoctorId:    record.DoctorId,
-			Attachments: record.Attachments,
-			FirstName:   record.FirstName,
-			LastName:    record.LastName,
-		})
-	}
+    var records []*pb.MedicalReport
+    for cursor.Next(ctx) {
+        var record pb.MedicalReport
+        if err := cursor.Decode(&record); err != nil {
+            return nil, fmt.Errorf("failed to decode record: %v", err)
+        }
+        records = append(records, &pb.MedicalReport{
+            Id:          record.Id,
+            RecordType:  record.RecordType,
+            RecordDate:  record.RecordDate,
+            Description: record.Description,
+            DoctorId:    record.DoctorId,
+            Attachments: record.Attachments,
+            FirstName:   record.FirstName,
+            LastName:    record.LastName,
+        })
+    }
 
-	if err := cursor.Err(); err != nil {
-		return nil, fmt.Errorf("cursor error: %v", err)
-	}
+    if err := cursor.Err(); err != nil {
+        return nil, fmt.Errorf("cursor error: %v", err)
+    }
 
-	return &pb.GetMedicalReportRes{
-		MedicalReport: records,
-	}, nil
-
+    return &pb.GetMedicalReportRes{
+        MedicalReport: records,
+    }, nil
 }
 
 func (r *medicalRecordRepositoryImpl) GetMedicalReportById(ctx context.Context, req *pb.GetMedicalReportByIdReq) (*pb.GetMedicalReportByIdRes, error) {

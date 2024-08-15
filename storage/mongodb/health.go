@@ -36,8 +36,8 @@ func (r *healthRepositoryImpl) GenerateHealthRecommendations(ctx context.Context
 		"recommendationType": req.RecommendationType,
 		"description":        req.Description,
 		"priority":           req.Priority,
-		"createdAt":          time.Now(),
-		"updatedAt":          time.Now(),
+		"createdAt":          time.Now().Format("2006-01-02"),
+		"updatedAt":          time.Now().Format("2006-01-02"),
 		"deletedAt":          0,
 	})
 	if err != nil {

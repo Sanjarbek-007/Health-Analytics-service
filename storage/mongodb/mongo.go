@@ -10,7 +10,7 @@ import (
 
 func ConnectMongoDB() (*mongo.Database, error) {
 	client, err := mongo.Connect(context.Background(), options.Client().
-	ApplyURI("mongodb://mongo:27017").SetAuth(options.Credential{Username: "root",Password: "example"}))
+	ApplyURI("mongodb://mongo:27017").SetAuth(options.Credential{Username: "root", Password: "example"}))
 	if err != nil {
 		log.Println(err)
         return nil, err

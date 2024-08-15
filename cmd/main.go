@@ -68,7 +68,7 @@ func main() {
 		reader.ComsumeMessages(ComsumeMessage)
 	}()
 
-	wear, err := kafka.NewKafkaConsumInit([]string{"kafka:9092"}, "wear", "group")
+	wear, err := kafka.NewKafkaConsumInit([]string{"kafka:9092"}, "werable", "group")
 	if err != nil {
 		log.Fatal(err)
 	}
